@@ -40,22 +40,22 @@ label{display:block;font-size:12.5px;color:var(--mu)}
 .sc{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:12.5px}th,td{padding:5px 6px;border-bottom:1px solid var(--bd);text-align:right;white-space:nowrap}tr.sl td{background:rgba(130,150,60,.2)}tr[data-i]{cursor:pointer}
 details{margin:10px 0}summary{cursor:pointer;color:var(--ac)}canvas#ch{width:100%;border-radius:10px;border:1px solid var(--bd)}
 @media (min-width:900px){#app{flex-direction:row}#sh{order:-1;width:410px;height:auto!important;border-radius:0;border-top:0;border-inline-end:1px solid var(--bd)}.grab{display:none}.sg{grid-template-columns:1fr 1fr}.kp{grid-template-columns:repeat(4,1fr)}}
-</style></head><body>
+#nv{position:absolute;inset-inline:8px;bottom:44px;background:#0d47a1;color:#fff;border-radius:8px;padding:6px 10px;font-size:13px;display:flex;gap:8px;align-items:center;z-index:3}#nv span{flex:1}#nv button{background:transparent;color:#fff;padding:2px 8px;border:1px solid #fff}.zm button.on{background:#2979ff;color:#fff}</style></head><body>
 <header class="top"><span>مساحة البحث عن الدرونات</span><span><button id="fit" title="ملاءمة الخريطة">⤢</button><button id="mn" title="الطبقات">☰</button></span></header>
 <div id="app">
 <main id="mapw"><canvas id="cv"></canvas><div id="m3" style="display:none"></div>
 <div class="seg" id="seg"><button data-m="nav" class="on">تحريك</button><button data-m="center">مركز التشويش</button><button data-m="add">إضافة نقطة</button></div>
 <div id="hint" style="display:none"></div><div id="cur"></div>
-<div class="zm"><button id="zi">＋</button><button id="zo">－</button></div>
+<div class="zm"><button id="lc" title="موقعي والتوجيه">◎</button><button id="zi">＋</button><button id="zo">－</button></div>
 <div id="lp" hidden><div class="row"><button class="s" id="vw2">2D</button><button class="s" id="vw3">3D</button><select id="base"><option value="grid">شبكة</option><option value="osm">شوارع</option><option value="hyb">هجين</option><option value="sat">قمر صناعي</option><option value="topo">تضاريس</option></select></div>
 <div class="chk"><label><input type="checkbox" id="l1" checked>مناطق البحث</label><label><input type="checkbox" id="l2" checked>الدرون المقدّر</label><label><input type="checkbox" id="l3" checked>مركز التشويش</label><label><input type="checkbox" id="l4" checked>خط الانطلاق</label><label><input type="checkbox" id="l5" checked>التسميات</label><label><input type="checkbox" id="l6" checked>البوصلة</label></div>
 <div id="c3" style="display:none"><button class="s" id="p1">ميل ＋</button><button class="s" id="p2">ميل －</button><button class="s" id="b1">⟲</button><button class="s" id="b2">⟳</button><button class="s" id="b0">شمال</button><label><input type="checkbox" id="hl" checked>أسماء الأماكن</label><label>تضخيم <select id="ex" style="width:auto"><option>1</option><option selected>1.5</option><option>2</option><option>3</option></select></label></div></div>
-<div id="elv">المس نقطة لعرض تفاصيلها، أو أي مكان لمعرفة ارتفاعه</div></main>
+<div id="nv" hidden><span id="nvt"></span><button id="nvx" aria-label="إيقاف">✕</button></div><div id="elv">المس نقطة لعرض تفاصيلها، أو أي مكان لمعرفة ارتفاعه</div></main>
 <section id="sh"><button class="grab" id="gr" aria-label="توسيع اللوحة"></button>
 <nav id="tabs"><button data-t="pt" class="on">النقاط</button><button data-t="st">الإعدادات</button><button data-t="rs">النتائج</button><button data-t="ex">تصدير</button></nav>
 <div class="pane" id="pane-pt"><h3>مركز التشويش (= نقطة الانطلاق)</h3>
 <div class="g2"><input id="jlat" inputmode="decimal" placeholder="خط العرض" value="31.6295"><input id="jlon" inputmode="decimal" placeholder="خط الطول" value="-7.9811"></div>
-<div class="btns"><button class="s" id="pm">من الخريطة</button><button class="s" id="gp">موقعي</button></div>
+<div class="btns"><button class="s" id="pm">من الخريطة</button><button class="s" id="gp">موقعي (تتبّع)</button><button class="s" id="gc">اجعله مركز التشويش</button></div>
 <h3>إضافة نقاط</h3><textarea id="qa" rows="2" placeholder="الصق الإحداثيات: 31.6310, -7.9850&#10;أو مع اسم: P1, 31.6310, -7.9850 (سطر لكل نقطة)"></textarea>
 <div class="btns"><button id="qb">إضافة</button><button class="s" id="am">من الخريطة</button></div><div id="qm" class="sm"></div>
 <h3>النقاط المسجّلة</h3><div id="pl"></div>
@@ -66,7 +66,7 @@ details{margin:10px 0}summary{cursor:pointer;color:var(--ac)}canvas#ch{width:100
 <h3>الاتجاه والدقة</h3><div class="sg"><div><label>اتجاه الدرون (°) — اختياري</label><input id="hd" type="range" min="-1" max="359" step="1" value="-1"></div><div><label>عدم يقين الاتجاه ± (°)</label><input id="yaw" type="range" min="0" max="90" step="1" value="15"></div><div><label>خطأ تحديد الموقع (م)</label><input id="e" type="range" min="0" max="200" step="5" value="30"></div></div>
 <h3>المسح</h3><div class="sg"><div><label>عرض الكشف البصري (م)</label><input id="sw" type="range" min="10" max="200" step="5" value="60"></div></div>
 <h3>الشمال المغناطيسي</h3><div class="sg"><div><label>الانحراف (° شرق +)</label><input id="dec" type="range" min="-30" max="30" step="0.1" value="0"></div><div><label>مرجع السمت</label><select id="ref"><option value="t">الشمال الحقيقي</option><option value="m">المغناطيسي</option></select></div></div><div class="btns"><button class="s" id="dc">تقدير الانحراف (إنترنت)</button></div>
-<h3>نقطة انطلاق مختلفة (اختياري)</h3><input id="home" placeholder="عرض, طول — افتراضيًا مركز التشويش"></div>
+<h3>التنقل نحو النقطة</h3><select id="pf"><option value="foot">مشيًا</option><option value="car">سيارة</option><option value="bike">دراجة</option></select><h3>نقطة انطلاق مختلفة (اختياري)</h3><input id="home" placeholder="عرض, طول — افتراضيًا مركز التشويش"></div>
 <div class="pane" id="pane-rs" hidden><div id="sum"></div><h3>مجالات البحث</h3><div class="sc" id="zt"></div><details><summary>كيف حُسبت؟</summary><div id="hw"></div></details><h3>كل النقاط (اضغط صفًا لتحديده)</h3><div class="sc" id="tb"></div><h3>مقارنة السيناريوهات</h3><canvas id="ch" height="230"></canvas></div>
 <div class="pane" id="pane-ex" hidden><h3>تصدير النقاط والمناطق</h3><div class="btns"><button id="xj">JSON</button><button id="xk">KML</button><button id="xg">GPX</button></div><h3>حفظ المعطيات</h3><div class="btns"><button class="s" id="sv">حفظ في ملف</button><button class="s" id="op">فتح ملف</button></div><input type="file" id="fl" accept=".json" hidden><div class="sm">تُحفظ المعطيات تلقائيًا في المتصفح أيضًا.</div></div>
 </section></div>
@@ -129,7 +129,7 @@ function render(){
 function renderList(){const el=$('pl');if(!S||S.recs.length<2){el.innerHTML='<div class="empty">لا توجد نقاط بعد — أضف إحداثيات أو اضغط «من الخريطة».</div>';return}
  el.innerHTML=S.recs.slice(1).map((r,k)=>`<div class="pc${k+1==sel?' sl':''}" data-i="${k+1}"><div><b>${r.name}</b><span dir="ltr">${r.est[0].toFixed(5)}, ${r.est[1].toFixed(5)}</span><small>${r.dist.toFixed(0)} م · ${r.az.toFixed(0)}° حق / ${mag(r.az).toFixed(0)}° مغ · ${r.area.toFixed(1)} هكتار</small></div><button class="x" data-d="${k+1}" aria-label="حذف">✕</button></div>`).join('')}
 function selRec(i){if(!S||!S.recs[i])return;sel=i;const r=S.recs[i];V.la=r.est[0];V.lo=r.est[1];render();renderList();draw();sync3();
- elvPre=r.name+(r.dist?' — '+r.dist.toFixed(0)+' م · '+r.az.toFixed(0)+'° حق / '+mag(r.az).toFixed(0)+'° مغ — منطقة '+r.area.toFixed(1)+' هكتار — ':' (مركز التشويش) — ');elev(r.est[0],r.est[1])}
+ elvPre=r.name+(r.dist?' — '+r.dist.toFixed(0)+' م · '+r.az.toFixed(0)+'° حق / '+mag(r.az).toFixed(0)+'° مغ — منطقة '+r.area.toFixed(1)+' هكتار — ':' (مركز التشويش) — ');elev(r.est[0],r.est[1]);setTgt(r.est,r.name)}
 function delPt(i){const r=S.recs[i];if(!r)return;const a=$('pts').value.split('\n');a.splice(r.line,1);$('pts').value=a.join('\n');sel=-1;run()}
 function addTxt(t,fitIt){const ls=t.split(/\n/).map(x=>x.trim()).filter(Boolean);if(!ls.length)return 0;const ta=$('pts');ta.value=(ta.value.trim()?ta.value.trim()+'\n':'')+ls.join('\n');run();if(fitIt)fit();return ls.length}
 
@@ -164,7 +164,7 @@ function draw(){size();cx.textAlign='left';const bs=$('base').value;cx.fillStyle
    if(L('l5')&&r.obs){cx.strokeStyle='#6b7d2f';cx.beginPath();cx.moveTo(X(r.obs[1]),Y(r.obs[0]));cx.lineTo(X(r.est[1]),Y(r.est[0]));cx.stroke()}
    if(L('l2')&&r.obs)dot(r.obs,'#00e5ff',r.name+' · الدرون المقدّر');
    if(L('l3')&&!r.obs)dot(r.est,'#ff2bd6','📡 مركز التشويش / الانطلاق')});}
- if(S&&sel>=0&&S.recs[sel]){const q=S.recs[sel].est;cx.beginPath();cx.arc(X(q[1]),Y(q[0]),13,0,7);cx.lineWidth=3;cx.strokeStyle='#fff';cx.stroke()}if(tp)dot(tp,'#fff');if(!S){const a=num('jlat'),b=num('jlon');if(!isNaN(a)&&!isNaN(b))dot([a,b],'#ff2bd6','📡 مركز التشويش')}if($('l6').checked){const px=46,py=34,r=19,d=decl()*D,fg=dark?'#fff':'#111';cx.save();cx.textAlign='center';cx.fillStyle=dark?'rgba(15,20,10,.72)':'rgba(255,255,255,.8)';cx.fillRect(4,4,84,90);
+ drawNav();if(S&&sel>=0&&S.recs[sel]){const q=S.recs[sel].est;cx.beginPath();cx.arc(X(q[1]),Y(q[0]),13,0,7);cx.lineWidth=3;cx.strokeStyle='#fff';cx.stroke()}if(tp)dot(tp,'#fff');if(!S){const a=num('jlat'),b=num('jlon');if(!isNaN(a)&&!isNaN(b))dot([a,b],'#ff2bd6','📡 مركز التشويش')}if($('l6').checked){const px=46,py=34,r=19,d=decl()*D,fg=dark?'#fff':'#111';cx.save();cx.textAlign='center';cx.fillStyle=dark?'rgba(15,20,10,.72)':'rgba(255,255,255,.8)';cx.fillRect(4,4,84,90);
 cx.strokeStyle=fg;cx.lineWidth=1.2;cx.beginPath();cx.arc(px,py,r,0,7);cx.stroke();for(let i=0;i<8;i++){const a=i*Math.PI/4,l=i%2?2:4;cx.beginPath();cx.moveTo(px+(r-l)*Math.sin(a),py-(r-l)*Math.cos(a));cx.lineTo(px+r*Math.sin(a),py-r*Math.cos(a));cx.stroke()}
 cx.fillStyle=fg;cx.beginPath();cx.moveTo(px,py-r+3);cx.lineTo(px+4,py);cx.lineTo(px-4,py);cx.closePath();cx.fill();cx.beginPath();cx.moveTo(px,py+r-3);cx.lineTo(px+4,py);cx.lineTo(px-4,py);cx.closePath();cx.stroke();
 cx.strokeStyle=cx.fillStyle='#ff4a3d';cx.lineWidth=2;cx.beginPath();cx.moveTo(px,py);cx.lineTo(px+(r+1)*Math.sin(d),py-(r+1)*Math.cos(d));cx.stroke();cx.beginPath();cx.arc(px+(r+1)*Math.sin(d),py-(r+1)*Math.cos(d),2.5,0,7);cx.fill();
@@ -185,7 +185,7 @@ function chart(){const c=$('ch'),d=devicePixelRatio||1,w=c.clientWidth,h=230;c.w
  g.textAlign='left';g.fillStyle=fg;g.fillText('المدى الأفقي عن نقطة التشويش (م) — '+r.name,L,14)}
 $('smp').onclick=()=>{$('pts').value='P1, 31.6310, -7.9850\nP2, 31.6270, -7.9760\nP3, 31.6340, -7.9800';run();fit()};$('clr').onclick=()=>{$('pts').value='';sel=-1;run()};
 $('go').onclick=()=>{run();fit()};
-const IDS=['jlat','jlon','h1','h2','v1','v2','vd','w','wf','hd','yaw','e','sw','home','pts','dec','ref'];
+const IDS=['jlat','jlon','h1','h2','v1','v2','vd','w','wf','hd','yaw','e','sw','home','pts','dec','ref','pf'];
 const state=()=>Object.fromEntries(IDS.map(i=>[i,$(i).value]));
 function persist(){try{localStorage.setItem('dsa',JSON.stringify(state()))}catch(e){}}
 function syncL(){document.querySelectorAll('input[type=range]').forEach(i=>{let b=$('o_'+i.id);if(!b){b=document.createElement('b');b.id='o_'+i.id;b.style.cssText='margin-inline-start:6px;color:var(--ac)';i.previousElementSibling.appendChild(b)}const v=+i.value;b.textContent=(i.id=='hd'&&v<0)?'غير معروف':v})}
@@ -216,12 +216,12 @@ function hitRec(e){if(!S)return -1;const r=cv.getBoundingClientRect(),x=e.client
 cv.addEventListener('pointerup',e=>{if(Math.hypot(e.clientX-sx.x,e.clientY-sx.y)>6)return;const[la,lo]=ll(e);
  if(mode=='add'){addTxt(la.toFixed(6)+', '+lo.toFixed(6),false);return}
  if(mode=='center'){$('jlat').value=la.toFixed(6);$('jlon').value=lo.toFixed(6);setMd('nav');run();return}
- const h=hitRec(e);if(h>=0){selRec(h);return}elvPre='';elev(la,lo)});
+ const h=hitRec(e);if(h>=0){selRec(h);return}elvPre='';elev(la,lo);setTgt([la,lo],'الموضع المحدد')});
 $('qb').onclick=()=>{if(addTxt($('qa').value,true))$('qa').value=''};
 $('qa').addEventListener('keydown',e=>{if(e.key=='Enter'&&!e.shiftKey){e.preventDefault();$('qb').click()}});
 $('pl').onclick=e=>{const d=e.target.closest('[data-d]');if(d){delPt(+d.dataset.d);return}const c=e.target.closest('[data-i]');if(c)selRec(+c.dataset.i)};
 $('tb').onclick=e=>{const t=e.target.closest('tr[data-i]');if(t)selRec(+t.dataset.i)};
-$('gp').onclick=()=>navigator.geolocation?navigator.geolocation.getCurrentPosition(p=>{$('jlat').value=p.coords.latitude.toFixed(6);$('jlon').value=p.coords.longitude.toFixed(6);recenter();run();fit()},()=>msg('تعذّر تحديد الموقع'),{enableHighAccuracy:true}):msg('الجهاز لا يدعم تحديد الموقع');
+
 $('mn').onclick=()=>{$('lp').hidden=!$('lp').hidden};
 const wide=()=>matchMedia('(min-width:900px)').matches,SH=['58px','46dvh','80dvh'];let shs=0;
 function setSh(n){shs=n;$('sh').style.height=wide()?'':SH[n];setTimeout(()=>{draw();if(map3)map3.resize()},40)}
@@ -262,7 +262,7 @@ const LABU='https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World
 function zones3(){const f=[];if(S)S.recs.forEach(r=>[1,.8,.5].forEach((sc,k)=>{const c=poly(r.Z,sc).map(q=>[q[1],q[0]]);c.push(c[0]);f.push({type:'Feature',properties:{k},geometry:{type:'Polygon',coordinates:[c]}})}));return{type:'FeatureCollection',features:f}}
 function lines3(){const f=[];if(S)S.recs.forEach(r=>{if(r.home&&dis(r.home,r.est)>5)f.push({type:'Feature',properties:{},geometry:{type:'LineString',coordinates:[[r.home[1],r.home[0]],[r.est[1],r.est[0]]]}})});return{type:'FeatureCollection',features:f}}
 function pts3(){const f=[],pt=(q,kind,n)=>f.push({type:'Feature',properties:{kind,n},geometry:{type:'Point',coordinates:[q[1],q[0]]}});if(S){S.recs.forEach((r,i)=>{if(i==0)pt(r.est,'c','📡 مركز التشويش / الانطلاق');else pt(r.est,'p',r.name+' · الدرون المقدّر');if(r.home&&dis(r.home,S.recs[0].est)>5)pt(r.home,'h','▲ نقطة الانطلاق')})}else{const a=num('jlat'),b=num('jlon');if(!isNaN(a)&&!isNaN(b))pt([a,b],'c','📡 مركز التشويش')}return{type:'FeatureCollection',features:f}}
-function sync3(fitIt){if(!map3||!map3.getSource('zones'))return;const L=id=>$(id).checked,g=pts3();map3.getSource('zones').setData(zones3());map3.getSource('lines').setData(lines3());map3.getSource('pts').setData(g);
+function sync3(fitIt){if(!map3||!map3.getSource('zones'))return;{const ns=map3.getSource('nav');if(ns)ns.setData(nav3data())}const L=id=>$(id).checked,g=pts3();map3.getSource('zones').setData(zones3());map3.getSource('lines').setData(lines3());map3.getSource('pts').setData(g);
  map3.setLayoutProperty('zf','visibility',L('l1')?'visible':'none');map3.setLayoutProperty('zl','visibility',L('l1')?'visible':'none');map3.setLayoutProperty('ln','visibility',L('l4')?'visible':'none');
  const kinds=[];if(L('l2'))kinds.push('p');if(L('l3'))kinds.push('c');if(L('l4'))kinds.push('h');map3.setFilter('pt',['in',['get','kind'],['literal',kinds]]);
  mk3.forEach(m=>m.remove());mk3=[];if(L('l5'))g.features.filter(x=>kinds.includes(x.properties.kind)).forEach(x=>{const el=document.createElement('div');el.textContent=x.properties.n;el.style.cssText='background:rgba(0,0,0,.7);color:#fff;padding:1px 6px;border-radius:6px;font:bold 12px sans-serif;white-space:nowrap;pointer-events:none';mk3.push(new maplibregl.Marker({element:el,anchor:'left',offset:[12,-12]}).setLngLat(x.geometry.coordinates).addTo(map3))});
@@ -277,6 +277,10 @@ function open3(){if(typeof maplibregl=='undefined'){alert('تعذّر تحميل
    map3.addLayer({id:'zf',type:'fill',source:'zones',paint:{'fill-color':zc,'fill-opacity':.3}});map3.addLayer({id:'zl',type:'line',source:'zones',paint:{'line-color':zc,'line-width':2}});
    map3.addLayer({id:'ln',type:'line',source:'lines',paint:{'line-color':'#ffeb3b','line-width':2,'line-dasharray':[2,2]}});
    map3.addLayer({id:'pt',type:'circle',source:'pts',paint:{'circle-radius':7,'circle-color':['match',['get','kind'],'c','#ff2bd6','p','#00e5ff','#ffeb3b'],'circle-stroke-color':'#fff','circle-stroke-width':2.5}});
+   map3.addSource('nav',{type:'geojson',data:{type:'FeatureCollection',features:[]}});
+   map3.addLayer({id:'navr',type:'line',source:'nav',filter:['==',['get','k'],'r'],paint:{'line-color':'#2979ff','line-width':5}});
+   map3.addLayer({id:'navd',type:'line',source:'nav',filter:['==',['get','k'],'d'],paint:{'line-color':'#ff9800','line-width':3,'line-dasharray':[2,2]}});
+   map3.addLayer({id:'mep',type:'circle',source:'nav',filter:['==',['get','k'],'m'],paint:{'circle-radius':8,'circle-color':'#2979ff','circle-stroke-color':'#fff','circle-stroke-width':3}});
    map3.moveLayer('labl');sync3(true)});
   map3.on('click',e=>elev(e.lngLat.lat,e.lngLat.lng))}
  return true}
@@ -289,6 +293,37 @@ $('ex').onchange=()=>{if(map3)map3.setTerrain({source:'dem',exaggeration:+$('ex'
 $('l6').addEventListener('change',()=>{draw();if(nav3)nav3._container.style.display=$('l6').checked?'':'none'});
 let tmr=null;syncL();document.querySelectorAll('input[type=range]').forEach(i=>i.addEventListener('input',()=>{syncL();if(S){clearTimeout(tmr);tmr=setTimeout(run,150)}}));
 $('hl').onchange=()=>{if(map3)map3.setLayoutProperty('labl','visibility',$('hl').checked?'visible':'none')};
+
+/* موقعي والتوجيه */
+let me=null,acc=0,wid=null,tgt=null,rte=null,rk='',rFrom=null,lastR=0,rpend=false,fitP=false,firstFix=true;
+const warn=t=>{$('cur').textContent=t;setTimeout(()=>{if($('cur').textContent==t)$('cur').textContent=''},7000)};
+function fitLL(p){const a=p.map(q=>q[0]),b=p.map(q=>q[1]);V.la=(Math.min(...a)+Math.max(...a))/2;V.lo=(Math.min(...b)+Math.max(...b))/2;for(let z=19;z>=3;z--){V.z=z;if(Math.abs(X(Math.max(...b))-X(Math.min(...b)))<W*.8&&Math.abs(Y(Math.min(...a))-Y(Math.max(...a)))<H*.7)break}draw()}
+function setTgt(ll,name){tgt={ll,name};rte=null;rk='';rpend=false;fitP=true;if(me){fitLL([me,ll]);getRoute()}renderNav();draw();sync3()}
+async function getRoute(){if(!me||!tgt)return;const pf=$('pf').value,key=tgt.ll.join()+pf;if(key==rk)return;rk=key;rFrom=me.slice();lastR=Date.now();rpend=true;rte=null;renderNav();
+ try{const r=await fetch(`https://routing.openstreetmap.de/routed-${pf}/route/v1/driving/${me[1]},${me[0]};${tgt.ll[1]},${tgt.ll[0]}?overview=full&geometries=geojson`);const j=await r.json();
+  if(rk==key&&j.code=='Ok'&&j.routes&&j.routes[0]){const c=j.routes[0].geometry.coordinates.map(q=>[q[1],q[0]]);rte={c,d:j.routes[0].distance,t:j.routes[0].duration};if(fitP){fitP=false;fitLL([me,tgt.ll].concat(c.filter((_,i)=>i%4==0)))}}}catch(e){}
+ if(rk==key){rpend=false;renderNav();draw();sync3()}}
+function renderNav(){const el=$('nv');if(!me||!tgt){el.hidden=true;return}el.hidden=false;const dd=dis(me,tgt.ll),b=brg(me,tgt.ll),f=m=>m<1000?Math.round(m)+' م':(m/1000).toFixed(2)+' كم',sp={foot:1.3,car:8,bike:4}[$('pf').value];
+ let t=`إلى «${tgt.name}»: ${f(dd)} مباشرة · السمت ${b.toFixed(0)}° حقيقي / ${mag(b).toFixed(0)}° مغناطيسي`;
+ t+=rte?` · عبر الطريق ${f(rte.d)} (≈ ${Math.max(1,Math.round(rte.t/60))} د)`:rpend?' · جارٍ البحث عن مسلك…':` · لا يوجد مسلك: خط مباشر (≈ ${Math.max(1,Math.round(dd/sp/60))} د)`;
+ if(acc)t+=` · دقة GPS ±${Math.round(acc)} م`;$('nvt').textContent=t}
+function drawNav(){if(!me)return;const g=(c,w,col,dash)=>{cx.setLineDash(dash||[]);cx.lineCap='round';cx.lineWidth=w;cx.strokeStyle=col;cx.beginPath();c.forEach((q,i)=>i?cx.lineTo(X(q[1]),Y(q[0])):cx.moveTo(X(q[1]),Y(q[0])));cx.stroke();cx.setLineDash([])};
+ if(tgt){if(rte){g(rte.c,8,'#fff');g(rte.c,5,'#2979ff');const e=rte.c[rte.c.length-1];if(dis(e,tgt.ll)>15){g([e,tgt.ll],6,'#fff');g([e,tgt.ll],3,'#ff9800',[6,6])}}else{g([me,tgt.ll],6,'#fff');g([me,tgt.ll],3,'#ff9800',[8,6])}dot(tgt.ll,'#ff9800',tgt.name)}
+ const px=acc/(R*Math.cos(me[0]*D)*2*Math.PI/(256*2**V.z));if(px>6){cx.beginPath();cx.arc(X(me[1]),Y(me[0]),px,0,7);cx.fillStyle='rgba(41,121,255,.16)';cx.fill()}
+ dot(me,'#2979ff','موقعي')}
+function nav3data(){const f=[],ln=(c,k)=>f.push({type:'Feature',properties:{k},geometry:{type:'LineString',coordinates:c.map(q=>[q[1],q[0]])}});
+ if(me){f.push({type:'Feature',properties:{k:'m'},geometry:{type:'Point',coordinates:[me[1],me[0]]}});if(tgt){if(rte){ln(rte.c,'r');const e=rte.c[rte.c.length-1];if(dis(e,tgt.ll)>15)ln([e,tgt.ll],'d')}else ln([me,tgt.ll],'d')}}return{type:'FeatureCollection',features:f}}
+function stopLoc(){if(wid!=null&&navigator.geolocation)navigator.geolocation.clearWatch(wid);wid=null;me=null;rte=null;rk='';rpend=false;$('gp').textContent='موقعي (تتبّع)';$('lc').classList.remove('on');renderNav();draw();sync3()}
+function toggleLoc(){if(wid!=null){stopLoc();return}if(!navigator.geolocation){warn('الجهاز أو المتصفح لا يدعم تحديد الموقع');return}
+ firstFix=true;$('gp').textContent='إيقاف تتبّع موقعي';$('lc').classList.add('on');
+ wid=navigator.geolocation.watchPosition(p=>{me=[p.coords.latitude,p.coords.longitude];acc=p.coords.accuracy||0;
+  if(firstFix){firstFix=false;if(tgt){fitP=true;fitLL([me,tgt.ll])}else{V.la=me[0];V.lo=me[1];V.z=Math.max(V.z,16)}}
+  if(tgt&&(rk==''||(rFrom&&dis(rFrom,me)>40&&Date.now()-lastR>8000))){rk='';getRoute()}
+  renderNav();draw();sync3()},
+  er=>{warn(er.code==1?'رُفض إذن الموقع — فعّله من إعدادات المتصفح للموقع، وتأكد أن الصفحة تُفتح عبر https':'تعذّر تحديد الموقع، تأكد من تشغيل GPS');stopLoc()},{enableHighAccuracy:true,maximumAge:2000,timeout:25000})}
+$('gp').onclick=toggleLoc;$('lc').onclick=toggleLoc;$('nvx').onclick=()=>{tgt=null;renderNav();draw();sync3()};
+$('pf').addEventListener('change',()=>{rk='';if(me&&tgt)getRoute();renderNav()});
+$('gc').onclick=()=>{const use=p=>{$('jlat').value=p[0].toFixed(6);$('jlon').value=p[1].toFixed(6);persist();recenter();run();fit()};if(me)use(me);else if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>use([p.coords.latitude,p.coords.longitude]),()=>warn('تعذّر تحديد الموقع'),{enableHighAccuracy:true});else warn('الجهاز لا يدعم تحديد الموقع')};
 let first=true;try{first=!localStorage.getItem('dsa')}catch(e){}$('base').value='hyb';recenter();run();fit();setMd('nav');openTab('pt');setSh(first?1:0);
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script></body></html>
