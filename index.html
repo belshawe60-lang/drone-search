@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8">
+<meta name="theme-color" content="#4b5320"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-180.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="بحث الدرون"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مساحة البحث عن الدرونات</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css"><script src="https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js" defer></script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#eef0e6;--card:#fafaf5;--tx:#1f2417;--mu:#5d6650;--ac:#4b5320;--bt:#fff;--bd:#cfd4bd}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#12160d;--card:#1b2214;--tx:#e6ead8;--mu:#a3ac8c;--ac:#a3b36b;--bt:#10150a;--bd:#33402a}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#12160d;--card:#1b2214;--tx:#e6ead8;--mu:#a3ac8c;--ac:#a3b36b;--bt:#10150a;--bd:#33402a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.6 "Segoe UI",Tahoma,Arial,sans-serif;padding:12px;max-width:900px;margin-inline:auto}
+h1{font-size:19px;margin:6px 0}h2{font-size:15px;margin:0 0 8px;color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-bottom:12px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+label{display:block;font-size:12px;color:var(--mu)}
+input,select,textarea{width:100%;padding:7px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit;direction:ltr;text-align:left}
+input[type=range]{padding:0;height:30px;accent-color:var(--ac);direction:ltr}textarea{min-height:110px;font-size:13px;font-family:ui-monospace,Consolas,monospace}
+button{background:var(--ac);color:var(--bt);border:0;border-radius:8px;padding:9px 14px;font:inherit;margin:6px 4px 0 0;cursor:pointer}
+button.s{background:transparent;color:var(--ac);border:1px solid var(--ac)}
+.sm{font-size:12px;color:var(--mu)}
+.sc{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:12.5px;white-space:nowrap}
+th,td{border-bottom:1px solid var(--bd);padding:5px 8px;text-align:right}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:2px 0 6px}canvas{width:100%;border-radius:10px;border:1px solid var(--bd);touch-action:none;display:block}
+.lay{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0;font-size:13px}.lay label{display:flex;gap:4px;align-items:center;color:var(--tx)}.lay input{width:auto}
+.k{display:inline-block;padding:2px 8px;border-radius:99px;background:var(--bg);border:1px solid var(--bd);margin:2px;font-size:12.5px}
+</style></head><body>
+<h1>🛰️ مساحة البحث عن الدرونات بعد التشويش</h1><div class="bar"><button id="t1">▲ إخفاء المعطيات</button><button id="t3" class="s">▲ إخفاء النتائج</button><button id="t2">▲ إخفاء الرسم والتصدير</button></div>
+<div class="card" id="c1"><h2>1) المعطيات (Observe)</h2>
+<div class="g">
+<div><label>خط عرض نقطة السقوط (جهاز التشويش)</label><input id="jlat" value="31.6295"></div>
+<div><label>خط طول نقطة السقوط</label><input id="jlon" value="-7.9811"></div>
+<div><label>الارتفاع الأدنى (م)</label><input id="h1" type="range" min="20" max="500" step="10" value="150"></div>
+<div><label>الارتفاع الأقصى (م)</label><input id="h2" type="range" min="20" max="500" step="10" value="300"></div>
+<div><label>السرعة الدنيا (كم/س)</label><input id="v1" type="range" min="0" max="120" step="5" value="50"></div>
+<div><label>السرعة القصوى (كم/س)</label><input id="v2" type="range" min="0" max="120" step="5" value="80"></div>
+<div><label>سرعة الهبوط المحكوم (م/ث)</label><input id="vd" type="range" min="0.5" max="10" step="0.5" value="3"></div>
+<div><label>سرعة الريح (م/ث)</label><input id="w" type="range" min="0" max="25" step="0.5" value="5"></div>
+<div><label>اتجاه هبوب الريح منه (°)</label><input id="wf" type="range" min="0" max="359" step="5" value="270"></div>
+<div><label>اتجاه الدرون (°) — اختياري</label><input id="hd" type="range" min="-1" max="359" step="1" value="-1"></div>
+<div><label>عدم يقين الاتجاه ± (°)</label><input id="yaw" type="range" min="0" max="90" step="1" value="15"></div>
+<div><label>خطأ تحديد الموقع (م)</label><input id="e" type="range" min="0" max="200" step="5" value="30"></div>
+<div><label>عرض الكشف البصري (م)</label><input id="sw" type="range" min="10" max="200" step="5" value="60"></div>
+<div><label>الانحراف المغناطيسي (° شرق +)</label><input id="dec" type="range" min="-30" max="30" step="0.1" value="0"></div><div><label>مرجع السمت/الاتجاه المُدخل</label><select id="ref"><option value="t">الشمال الحقيقي</option><option value="m">الشمال المغناطيسي</option></select></div><div><label>&nbsp;</label><button id="dc" style="margin:0;width:100%">تقدير الانحراف (إنترنت)</button></div><div><label>نقطة الانطلاق (افتراضيًا = مركز التشويش): عرض, طول</label><input id="home" placeholder="31.6, -7.9"></div>
+</div>
+<label style="margin-top:8px">نقاط الرصد — لكل سطر: [اسم]، عرض، طول، [مسافة م]، [سمت °]، [عرض الانطلاق]، [طول الانطلاق] (فاصلة أو فاصلة منقوطة)</label>
+<textarea id="pts" spellcheck="false" placeholder="P1, 31.6310, -7.9850, 400, 45, 31.6200, -7.9900"></textarea>
+<div class="sm">الإحداثيات (عرض، طول) هي الحقل الإلزامي الوحيد. الاسم يُرقَّم تلقائيًا (P1، P2…)، والمسافة والسمت يُحسبان من نقطة الانطلاق (= مركز التشويش افتراضيًا) إلى النقطة وتُملأ الحقول تلقائيًا. السمت = من نقطة الانطلاق إلى النقطة، والنقطة تُعتبر موقع الدرون المقدّر، ويُفسَّر بحسب المرجع المختار (حقيقي/مغناطيسي) مع الانحراف المدخل. السطر الذي يبدأ بـ # يُتجاهل.</div>
+<button id="go">حساب ورسم</button><button class="s" id="smp">مثال</button></div>
+
+<div class="card" id="c2"><h2>2) النتائج (Orient / Decide)</h2><div id="sum" class="sm">اضغط «حساب ورسم».</div><div class="sc" id="tb"></div></div>
+
+<div class="card"><h2>3) الخريطة متعددة الطبقات (Act)</h2>
+<div class="lay"><button class="s" id="v2" style="margin:0">🗺 2D</button><button class="s" id="v3" style="margin:0">🏔 3D قمر صناعي + تضاريس</button>
+<label>الخلفية <select id="base" style="width:auto"><option value="grid">شبكة</option><option value="osm">OSM</option><option value="hyb">هجين (قمر صناعي + أسماء وطرق)</option><option value="sat">قمر صناعي</option><option value="topo">تضاريس</option></select></label>
+<label><input type="checkbox" id="l1" checked>مناطق البحث (50/80/100٪)</label>
+<label><input type="checkbox" id="l2" checked>مواقع الدرون المقدّرة</label>
+<label><input type="checkbox" id="l3" checked>مركز التشويش</label>
+<label><input type="checkbox" id="l4" checked>نقطة الانطلاق وخط العودة</label>
+<label><input type="checkbox" id="l5" checked>التسميات</label><label><input type="checkbox" id="l6" checked>البوصلة</label>
+</div>
+<canvas id="cv" height="400"></canvas><div id="m3" style="display:none;width:100%;height:400px;border-radius:10px;border:1px solid var(--bd)"></div><div id="c3" class="lay" style="display:none"><button class="s" id="p1" style="margin:0">ميل ➕</button><button class="s" id="p2" style="margin:0">ميل ➖</button><button class="s" id="b1" style="margin:0">⟲</button><button class="s" id="b2" style="margin:0">⟳</button><button class="s" id="b0" style="margin:0">شمال</button><label><input type="checkbox" id="hl" checked>أسماء الأماكن</label><label>تضخيم التضاريس <select id="ex" style="width:auto"><option>1</option><option selected>1.5</option><option>2</option><option>3</option></select></label></div><div class="sm" id="elv" style="font-weight:600">👆 المس أي مكان لعرض إحداثياته وارتفاعه</div><div class="sm">🟣 أرجواني = مركز التشويش/الانطلاق · 🔵 سماوي = موقع الدرون المقدّر · 🟡 أصفر = نقطة انطلاق مختلفة وخط العودة</div>
+<div class="sm" id="cur"></div><button id="pk">📍 اختيار مركز التشويش من الخريطة</button><button class="s" id="ad">➕ إضافة نقطة رصد من الخريطة</button><button class="s" id="zi">＋</button><button class="s" id="zo">－</button><button class="s" id="fit">ملاءمة</button>
+<div class="sm">أحمر = 50٪، برتقالي = 80٪، أصفر = 100٪. الخرائط الحية (OSM/قمر صناعي) تعمل عند فتح الملف محليًا بالإنترنت؛ داخل المعاينة المستضافة تبقى الشبكة.</div></div>
+
+<div class="card" id="c4"><h2>4) مقارنة السيناريوهات (رسم بياني)</h2><canvas id="ch" height="230"></canvas></div>
+
+<div class="card" id="c5"><h2>التصدير والحفظ</h2><button id="xj">تصدير JSON</button><button id="xk">تصدير KML</button><button id="xg">تصدير GPX</button><button class="s" id="sv">حفظ المعطيات على القرص</button><button class="s" id="op">فتح ملف معطيات</button><input type="file" id="fl" accept=".json" hidden><div class="sm">تُحفظ المعطيات تلقائيًا في المتصفح أيضًا. التنزيل المباشر إلى القرص يعمل في النسخة المحلية.</div></div>
+<div class="card" id="c6"><h2>مراحل العمل</h2>
+<span class="k">Observe: إحداثيات الجهاز + الرصد + الريح</span><span class="k">Orient: نموذج السقوط والانجراف</span><span class="k">Decide: ترتيب المناطق وطريقة المسح</span><span class="k">Act: مسح ثم تحديث وإعادة الدورة</span></div>
+
+<script>
+const R=6371000,D=Math.PI/180,G=9.81,$=id=>document.getElementById(id);
+const dest=(la,lo,d,b)=>{const p=la*D,l=lo*D,a=d/R,q=Math.asin(Math.sin(p)*Math.cos(a)+Math.cos(p)*Math.sin(a)*Math.cos(b*D));return[q/D,(l+Math.atan2(Math.sin(b*D)*Math.sin(a)*Math.cos(p),Math.cos(a)-Math.sin(p)*Math.sin(q)))/D]};
+const brg=(a,b)=>{const p1=a[0]*D,p2=b[0]*D,dl=(b[1]-a[1])*D;return(Math.atan2(Math.sin(dl)*Math.cos(p2),Math.cos(p1)*Math.sin(p2)-Math.sin(p1)*Math.cos(p2)*Math.cos(dl))/D+360)%360};
+const dis=(a,b)=>{const p1=a[0]*D,p2=b[0]*D,x=Math.sin((p2-p1)/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin((b[1]-a[1])*D/2)**2;return 2*R*Math.asin(Math.sqrt(x))};
+let big=false;const num=id=>parseFloat($(id).value);const decl=()=>parseFloat($('dec').value)||0,mag=t=>((t-decl())%360+360)%360;
+function P(){return{h1:num('h1'),h2:num('h2'),v1:num('v1'),v2:num('v2'),vd:num('vd')||3,w:num('w')||0,wf:num('wf')||0,yaw:num('yaw')||0,e:num('e')||0,sw:num('sw')||60}}
+function calc(E,hd,p){
+ const pts=[],wv=(p.wf+180)*D,bs=[];
+ if(hd==null)for(let i=0;i<12;i++)bs.push(i*30);else[-1,-.5,0,.5,1].forEach(k=>bs.push(hd+k*p.yaw));
+ let bLo=1e9,bHi=0,cLo=1e9,cHi=0;
+ for(const h of[p.h1,p.h2])for(const v of[p.v1,p.v2]){
+  const vm=v/3.6,tb=Math.sqrt(2*h/G),rbH=vm*tb*.85,rbL=vm*tb*.5,tc=h/p.vd,rc=.5*vm*4;
+  const wb=p.w*tb,wc=p.w*tc;
+  bLo=Math.min(bLo,rbL);bHi=Math.max(bHi,rbH+wb);cLo=Math.min(cLo,Math.max(0,wc-rc));cHi=Math.max(cHi,rc+wc);
+  for(const b of bs){const u=[Math.sin(b*D),Math.cos(b*D)];
+   [[rbL,wb],[rbH,wb],[rc,wc],[0,wc]].forEach(([r,w])=>pts.push([r*u[0]+w*Math.sin(wv),r*u[1]+w*Math.cos(wv)]))}}
+ const cx=pts.reduce((s,q)=>s+q[0],0)/pts.length,cy=pts.reduce((s,q)=>s+q[1],0)/pts.length;
+ let a=0,b=0;
+ if(hd==null){a=b=Math.max(...pts.map(q=>Math.hypot(q[0]-cx,q[1]-cy)))+p.e}
+ else{const u=[Math.sin(hd*D),Math.cos(hd*D)],n=[u[1],-u[0]];
+  a=Math.max(...pts.map(q=>Math.abs((q[0]-cx)*u[0]+(q[1]-cy)*u[1])))+p.e;
+  b=Math.max(...pts.map(q=>Math.abs((q[0]-cx)*n[0]+(q[1]-cy)*n[1])))+p.e}
+ const C=dest(E[0],E[1],Math.hypot(cx,cy),(Math.atan2(cx,cy)/D+360)%360);
+ return{C,a,b,beta:hd==null?0:hd,bLo,bHi,cLo,cHi}}
+function poly(Z,s){const o=[];for(let i=0;i<72;i++){const t=i/72*2*Math.PI,x=Z.a*s*Math.cos(t),y=Z.b*s*Math.sin(t);o.push(dest(Z.C[0],Z.C[1],Math.hypot(x,y),Z.beta+Math.atan2(y,x)/D))}return o}
+let S=null;
+function run(){
+ const p=P(),J=[num('jlat'),num('jlon')];if(isNaN(J[0])||isNaN(J[1])){alert('إحداثيات نقطة السقوط غير صالحة');return}
+ const hdG=num('hd')<0?null:(num('hd')+($('ref').value=='m'?decl():0)+360)%360,hm=$('home').value.match(/-?\d+(\.\d+)?/g),homeG=hm&&hm.length>=2?[+hm[0],+hm[1]]:null;
+ const recs=[{name:'جهاز التشويش',obs:null,est:J,home:homeG||J}];
+ const ref=$('ref').value,out=[];let cnt=0;$('pts').value.split(/\n/).forEach((ln,i)=>{ln=ln.trim();if(!ln)return;if(ln[0]=='#'){out.push(ln);return}
+  const f=ln.split(/[;,،؛\t]/),nl=/^[\s\d.+\-]+$/.test(f[0]);cnt++;const name=nl?'P'+cnt:(f[0].trim()||'P'+cnt),n=((nl?f:f.slice(1)).join(' ').match(/-?\d+(\.\d+)?/g)||[]).map(Number);
+  if(n.length<2){cnt--;return}const O=[n[0],n[1]],hm2=n.length>=6?[n[4],n[5]]:(homeG||J),dI=dis(hm2,O),aT=dI<1?0:brg(hm2,O),E=O;recs.push({name,obs:O,est:E,dist:dI,az:aT,home:hm2});out.push([name,O[0],O[1],dI.toFixed(0),(((aT-(ref=='m'?decl():0))%360+360)%360).toFixed(1)].concat(hm2?[hm2[0],hm2[1]]:[]).join(', '))});$('pts').value=out.join('\n');
+ recs.forEach(r=>{let hd=hdG;if(r.home&&(hdG==null))hd=dis(r.home,r.est)<5?null:brg(r.home,r.est);r.hd=hd;r.Z=calc(r.est,hd,p);r.area=Math.PI*r.Z.a*r.Z.b/1e4;
+  r.rth=r.home?dis(r.est,r.home):null});
+ S={recs,p};draw();render();sync3()}
+function render(){
+ const{recs,p}=S,tot=recs.reduce((s,r)=>s+r.area,0),mx=recs.reduce((m,r)=>r.area>m.area?r:m,recs[0]);
+ const leg=mx.area*1e4/p.sw;
+ $('sum').innerHTML=`أكبر مساحة بحث: <b>${mx.area.toFixed(1)} هكتار</b> (${mx.name}). طول مسار المسح ≈ <b>${(leg/1000).toFixed(1)} كم</b> بعرض كشف ${p.sw} م؛ زمنه ≈ ${(leg/ (10*60)).toFixed(0)} د بدرون مسح (10 م/ث) أو ${(leg/ (1.1*60)/60).toFixed(1)} س مشيًا. ابدأ بالمنطقة الحمراء (50٪) ثم البرتقالية ثم الصفراء، وبعد كل مسح حدّث المعطيات وأعد الدورة.`;
+ let h='<table><tr><th>النقطة</th><th>الدرون المقدّر</th><th>المحور a (م)</th><th>المحور b (م)</th><th>المساحة (هكتار)</th><th>نصف المساحة 50٪</th><th>اتجاه الطيران حقيقي/مغ °</th><th>السمت من النقطة حقيقي/مغ °</th><th>مسافة للانطلاق (م)</th></tr>';
+ recs.forEach(r=>h+=`<tr><td>${r.name}</td><td dir="ltr">${r.est[0].toFixed(5)}, ${r.est[1].toFixed(5)}</td><td>${r.Z.a.toFixed(0)}</td><td>${r.Z.b.toFixed(0)}</td><td>${r.area.toFixed(1)}</td><td>${(r.area*.25).toFixed(1)}</td><td>${r.hd==null?'—':r.hd.toFixed(0)+' / '+mag(r.hd).toFixed(0)}</td><td>${r.az==null?'—':r.az.toFixed(0)+' / '+mag(r.az).toFixed(0)}</td><td>${r.rth==null?'—':r.rth.toFixed(0)}</td></tr>`);
+ $('tb').innerHTML=h+'</table>';chart()}
+/* map */
+const cv=$('cv'),cx=cv.getContext('2d');let V={la:31.63,lo:-7.98,z:15},W=300,H=400,tiles={};
+const T={osm:'https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png',sat:'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',topo:'https://tile.opentopomap.org/{z}/{x}/{y}.png',tra:'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',lab:'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}'};T.hyb=T.sat;
+const mx=(lo,z)=>(lo+180)/360*256*2**z,my=(la,z)=>(1-Math.log(Math.tan(la*D)+1/Math.cos(la*D))/Math.PI)/2*256*2**z;
+const X=(lo)=>W/2+mx(lo,V.z)-mx(V.lo,V.z),Y=(la)=>H/2+my(la,V.z)-my(V.la,V.z);
+function size(){const d=window.devicePixelRatio||1;W=cv.clientWidth;H=big?Math.max(420,innerHeight-170):400;cv.width=W*d;cv.height=H*d;cx.setTransform(d,0,0,d,0,0)}
+function fit(){if(!S)return;let a=[],b=[];S.recs.forEach(r=>{poly(r.Z,1).forEach(q=>{a.push(q[0]);b.push(q[1])});if(r.obs){a.push(r.obs[0]);b.push(r.obs[1])}if(r.home&&$('l4').checked){a.push(r.home[0]);b.push(r.home[1])}});
+ const la=(Math.min(...a)+Math.max(...a))/2,lo=(Math.min(...b)+Math.max(...b))/2;V.la=la;V.lo=lo;
+ for(let z=19;z>=3;z--){V.z=z;if(Math.abs(X(Math.max(...b))-X(Math.min(...b)))<W*.85&&Math.abs(Y(Math.min(...a))-Y(Math.max(...a)))<H*.85)break}draw()}
+function draw(){size();cx.textAlign='left';const bs=$('base').value;cx.fillStyle=getComputedStyle(document.body).backgroundColor;cx.fillRect(0,0,W,H);
+ const dark=matchMedia('(prefers-color-scheme:dark)').matches;
+ {cx.fillStyle=dark?'#1d2630':'#eef1f5';cx.fillRect(0,0,W,H);cx.strokeStyle=dark?'#33404f':'#cfd6df';cx.lineWidth=1;cx.fillStyle='#889';cx.font='10px sans-serif';
+  const pd=360/(256*2**V.z);let st=.0001;while(st/pd<80)st*=2;
+  const lo0=V.lo-W/2*pd,lo1=V.lo+W/2*pd;for(let l=Math.floor(lo0/st)*st;l<lo1;l+=st){const x=X(l);cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke();cx.fillText(l.toFixed(4),x+2,H-3)}
+  const la0=V.la-H/2*pd*.85,la1=V.la+H/2*pd*.85;for(let l=Math.floor(la0/st)*st;l<la1;l+=st){const y=Y(l);cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke();cx.fillText(l.toFixed(4),2,y-2)}}
+ if(bs!='grid'){const z=Math.max(1,Math.min(18,Math.round(V.z))),k=2**(V.z-z),x0=mx(V.lo,z)-W/2/k,y0=my(V.la,z)-H/2/k;
+  for(const TU of(bs=='hyb'?[T.sat,T.tra,T.lab]:[T[bs]]))for(let tx=Math.floor(x0/256);tx<=Math.floor((x0+W/k)/256);tx++)for(let ty=Math.floor(y0/256);ty<=Math.floor((y0+H/k)/256);ty++){
+   const u=TU.replace('{z}',z).replace('{x}',tx).replace('{y}',ty);let im=tiles[u];if(!im){im=tiles[u]=new Image();im.onload=()=>{tok++;$('cur').textContent='';draw()};im.onerror=()=>{tfail++;if(tfail>=4&&!tok)$('cur').textContent='⚠ تعذّر تحميل صور الخريطة: الصفحة المستضافة داخل Claude تمنع الصور الخارجية. افتح ملف HTML مباشرة في المتصفح أو على استضافة ثابتة.'};im.src=u}
+   if(im.complete&&im.naturalWidth)cx.drawImage(im,(tx*256-x0)*k,(ty*256-y0)*k,256*k,256*k)}}
+ if(S){const L=id=>$(id).checked,col=['rgba(255,214,0,.25)','rgba(255,140,0,.3)','rgba(230,30,30,.35)'],sc=[1,.8,.5];
+  if(L('l1'))S.recs.forEach(r=>sc.forEach((s,i)=>{const pl=poly(r.Z,s);cx.beginPath();pl.forEach((q,j)=>j?cx.lineTo(X(q[1]),Y(q[0])):cx.moveTo(X(q[1]),Y(q[0])));cx.closePath();cx.fillStyle=col[i];cx.fill();cx.lineWidth=2;cx.strokeStyle=col[i].replace(/[\d.]+\)$/,'1)');cx.stroke()}));
+  S.recs.forEach(r=>{
+   if(L('l4')&&r.home){cx.strokeStyle='#ffeb3b';cx.lineWidth=2;cx.setLineDash([6,4]);cx.beginPath();cx.moveTo(X(r.home[1]),Y(r.home[0]));cx.lineTo(X(r.est[1]),Y(r.est[0]));cx.stroke();cx.setLineDash([]);if(dis(r.home,S.recs[0].est)>5)dot(r.home,'#ffeb3b','▲ نقطة الانطلاق')}
+   if(L('l5')&&r.obs){cx.strokeStyle='#6b7d2f';cx.beginPath();cx.moveTo(X(r.obs[1]),Y(r.obs[0]));cx.lineTo(X(r.est[1]),Y(r.est[0]));cx.stroke()}
+   if(L('l2')&&r.obs)dot(r.obs,'#00e5ff',r.name+' · الدرون المقدّر');
+   if(L('l3')&&!r.obs)dot(r.est,'#ff2bd6','📡 مركز التشويش / الانطلاق')});}
+ if(tp)dot(tp,'#fff');if(!S){const a=num('jlat'),b=num('jlon');if(!isNaN(a)&&!isNaN(b))dot([a,b],'#ff2bd6','📡 مركز التشويش')}if($('l6').checked){const px=46,py=34,r=19,d=decl()*D,fg=dark?'#fff':'#111';cx.save();cx.textAlign='center';cx.fillStyle=dark?'rgba(15,20,10,.72)':'rgba(255,255,255,.8)';cx.fillRect(4,4,84,90);
+cx.strokeStyle=fg;cx.lineWidth=1.2;cx.beginPath();cx.arc(px,py,r,0,7);cx.stroke();for(let i=0;i<8;i++){const a=i*Math.PI/4,l=i%2?2:4;cx.beginPath();cx.moveTo(px+(r-l)*Math.sin(a),py-(r-l)*Math.cos(a));cx.lineTo(px+r*Math.sin(a),py-r*Math.cos(a));cx.stroke()}
+cx.fillStyle=fg;cx.beginPath();cx.moveTo(px,py-r+3);cx.lineTo(px+4,py);cx.lineTo(px-4,py);cx.closePath();cx.fill();cx.beginPath();cx.moveTo(px,py+r-3);cx.lineTo(px+4,py);cx.lineTo(px-4,py);cx.closePath();cx.stroke();
+cx.strokeStyle=cx.fillStyle='#ff4a3d';cx.lineWidth=2;cx.beginPath();cx.moveTo(px,py);cx.lineTo(px+(r+1)*Math.sin(d),py-(r+1)*Math.cos(d));cx.stroke();cx.beginPath();cx.arc(px+(r+1)*Math.sin(d),py-(r+1)*Math.cos(d),2.5,0,7);cx.fill();
+cx.font='bold 9px sans-serif';cx.fillStyle=fg;cx.fillText('N',px,12);cx.font='9px sans-serif';cx.fillText('WGS84 · DD',px,65);cx.fillStyle='#ff4a3d';cx.fillText('Mg '+(decl()>=0?'+':'')+decl().toFixed(1)+'°',px,76);cx.fillStyle=fg;cx.fillText('المرجع: '+($('ref').value=='m'?'مغناطيسي':'حقيقي'),px,87);cx.restore()}
+if(bs=='osm'||bs=='hyb'){cx.fillStyle=dark?'#fff':'#000';cx.font='10px sans-serif';cx.fillText(bs=='osm'?'© OpenStreetMap © CARTO':'Esri',W-(bs=='osm'?150:50),H-6)}cx.fillStyle=dark?'#fff':'#000';cx.font='11px sans-serif';const m100=100/(R*Math.cos(V.la*D)*2*Math.PI/(256*2**V.z));cx.fillRect(10,H-18,m100,3);cx.fillText('100 م',10,H-22)}
+function dot(q,c,t){const x=X(q[1]),y=Y(q[0]);cx.beginPath();cx.arc(x,y,7,0,7);cx.fillStyle=c;cx.fill();cx.lineWidth=3;cx.strokeStyle='#000';cx.stroke();cx.lineWidth=1.5;cx.strokeStyle='#fff';cx.stroke();if(t&&$('l5').checked){cx.font='bold 12px sans-serif';cx.lineWidth=3;cx.strokeStyle='#000';cx.strokeText(t,x+10,y-8);cx.fillStyle='#fff';cx.fillText(t,x+10,y-8)}}
+let dr=null;cv.onpointerdown=e=>{dr=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId)};cv.onpointerup=()=>dr=null;
+cv.onpointermove=e=>{if(ptr.size>1)return;if(!dr)return;const dx=e.clientX-dr[0],dy=e.clientY-dr[1];dr=[e.clientX,e.clientY];const s=256*2**V.z;V.lo-=dx/s*360;const py=my(V.la,V.z)-dy;V.la=Math.atan(Math.sinh(Math.PI*(1-2*py/s)))/D;draw()};
+cv.onwheel=e=>{e.preventDefault();V.z=Math.max(3,Math.min(19,V.z+(e.deltaY<0?.5:-.5)));draw()};
+$('zi').onclick=()=>{V.z=Math.min(19,V.z+1);draw()};$('zo').onclick=()=>{V.z=Math.max(3,V.z-1);draw()};$('fit').onclick=fit;
+['base','l1','l2','l3','l4','l5'].forEach(i=>$(i).onchange=draw);addEventListener('resize',draw);
+/* chart */
+function chart(){const c=$('ch'),d=devicePixelRatio||1,w=c.clientWidth,h=230;c.width=w*d;c.height=h*d;const g=c.getContext('2d');g.setTransform(d,0,0,d,0,0);
+ const dark=matchMedia('(prefers-color-scheme:dark)').matches,fg=dark?'#e8edf3':'#1b2330';const r=S.recs[0],Z=r.Z,rows=[['سقوط حر',Z.bLo,Z.bHi,'#e67e22'],['هبوط محكوم + ريح',Z.cLo,Z.cHi,'#6b7d2f']];
+ if(r.rth!=null)rows.push(['عودة تلقائية (حتى الانطلاق)',0,r.rth,'#c2a24a']);
+ const mxv=Math.max(...rows.map(q=>q[2]))*1.1,L=130,bw=w-L-20;g.font='12px sans-serif';g.fillStyle=fg;g.textAlign='right';
+ rows.forEach((q,i)=>{const y=30+i*55;g.fillStyle=fg;g.fillText(q[0],L-8,y+14);g.fillStyle=q[3];g.fillRect(L+q[1]/mxv*bw,y,Math.max(3,(q[2]-q[1])/mxv*bw),22);g.fillStyle=fg;g.textAlign='left';g.fillText(`${q[1].toFixed(0)}–${q[2].toFixed(0)} م`,L+q[2]/mxv*bw-60,y+38);g.textAlign='right'});
+ g.textAlign='left';g.fillStyle=fg;g.fillText('المدى الأفقي عن نقطة التشويش (م) — '+r.name,L,14)}
+$('smp').onclick=()=>{$('pts').value='# اسم, عرض, طول, مسافة, سمت, عرض الانطلاق, طول الانطلاق\nP1, 31.6310, -7.9850, 400, 60, 31.6200, -7.9900\nP2; 31.6270; -7.9760; 350; 300; 31.6200; -7.9900\nP3, 31.6340, -7.9800, 500, 200, 31.6200, -7.9900';run();fit()};
+$('go').onclick=()=>{run();fit()};
+const IDS=['jlat','jlon','h1','h2','v1','v2','vd','w','wf','hd','yaw','e','sw','home','pts','dec','ref'];
+const state=()=>Object.fromEntries(IDS.map(i=>[i,$(i).value]));
+function persist(){try{localStorage.setItem('dsa',JSON.stringify(state()))}catch(e){}}
+function syncL(){document.querySelectorAll('input[type=range]').forEach(i=>{let b=$('o_'+i.id);if(!b){b=document.createElement('b');b.id='o_'+i.id;b.style.cssText='margin-inline-start:6px;color:var(--ac)';i.previousElementSibling.appendChild(b)}const v=+i.value;b.textContent=(i.id=='hd'&&v<0)?'غير معروف':v})}
+function load(o){IDS.forEach(i=>{if(o[i]!=null)$(i).value=(i=='hd'&&o[i]==='')?-1:o[i]});syncL()}
+try{const o=JSON.parse(localStorage.getItem('dsa')||'null');if(o)load(o)}catch(e){}
+IDS.forEach(i=>$(i).addEventListener('input',persist));
+function recenter(){const a=num('jlat'),b=num('jlon');if(!isNaN(a)&&!isNaN(b)){V.la=a;V.lo=b;draw()}}
+['jlat','jlon'].forEach(i=>$(i).addEventListener('change',recenter));
+async function dl(name,txt,mime){try{if(window.showSaveFilePicker){const h=await showSaveFilePicker({suggestedName:name});const w=await h.createWritable();await w.write(txt);await w.close();return}}catch(e){if(e&&e.name=='AbortError')return}
+ const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt],{type:mime}));a.download=name;document.body.appendChild(a);a.click();a.remove()}
+$('sv').onclick=()=>dl('drone_search_data.json',JSON.stringify(state(),null,1),'application/json');
+$('op').onclick=()=>$('fl').click();
+$('fl').onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{load(JSON.parse(r.result));persist();recenter();run();fit()}catch(x){alert('ملف غير صالح')}};r.readAsText(f)};
+const ex=()=>{if(!S)run();return S};
+$('xj').onclick=()=>{const s=ex();if(!s)return;dl('drone_points.json',JSON.stringify({params:{...s.p,declination_deg:decl()},points:s.recs.map(r=>({name:r.name,observer:r.obs,distance_m:r.dist??null,azimuth_true_deg:r.az==null?null:+r.az.toFixed(1),azimuth_magnetic_deg:r.az==null?null:+mag(r.az).toFixed(1),estimated:r.est,launch:r.home,heading_deg:r.hd,search_zone:{center:r.Z.C,a_m:+r.Z.a.toFixed(1),b_m:+r.Z.b.toFixed(1),area_ha:+r.area.toFixed(2)}}))},null,1),'application/json')};
+const esc=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+$('xk').onclick=()=>{const s=ex();if(!s)return;let k='<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>Drone search</name>';
+ const pm=(n,q,d)=>{k+=`<Placemark><name>${esc(n)}</name><description>${esc(d||'')}</description><Point><coordinates>${q[1]},${q[0]},0</coordinates></Point></Placemark>`};
+ s.recs.forEach(r=>{pm(r.name+' (مقدّر)',r.est);if(r.obs)pm(r.name+' (رصد)',r.obs,r.dist.toFixed(0)+' م / '+r.az.toFixed(1)+'° حقيقي / '+mag(r.az).toFixed(1)+'° مغ');if(r.home)pm(r.name+' (انطلاق)',r.home);
+  [1,.8,.5].forEach(sc=>{const c=poly(r.Z,sc).map(q=>q[1]+','+q[0]+',0');c.push(c[0]);k+=`<Placemark><name>${esc(r.name)} ${sc*100}%</name><Polygon><outerBoundaryIs><LinearRing><coordinates>${c.join(' ')}</coordinates></LinearRing></outerBoundaryIs></Polygon></Placemark>`})});
+ dl('drone_points.kml',k+'</Document></kml>','application/vnd.google-earth.kml+xml')};
+let pick=false;const sx={x:0,y:0};
+function setPick(v){pick=v;$('pk').textContent=v?'اضغط على الخريطة الآن… (إلغاء)':'📍 اختيار مركز التشويش من الخريطة';cv.style.cursor=v?'crosshair':'grab'}
+$('pk').onclick=()=>setPick(!pick);
+cv.addEventListener('pointerdown',e=>{sx.x=e.clientX;sx.y=e.clientY});
+cv.addEventListener('pointerup',e=>{if(Math.hypot(e.clientX-sx.x,e.clientY-sx.y)>5)return;const r=cv.getBoundingClientRect(),s=256*2**V.z,lo=V.lo+(e.clientX-r.left-W/2)/s*360,py=my(V.la,V.z)+(e.clientY-r.top-H/2),la=Math.atan(Math.sinh(Math.PI*(1-2*py/s)))/D;
+ elev(la,lo);
+ if(addm){const t=$('pts');t.value=(t.value.trim()?t.value.trim()+'\n':'')+la.toFixed(6)+', '+lo.toFixed(6);setAdd(false);persist();run();return}if(pick){$('jlat').value=la.toFixed(6);$('jlon').value=lo.toFixed(6);setPick(false);persist();run()}});
+let addm=false;function setAdd(v){addm=v;$('ad').textContent=v?'اضغط موضع النقطة على الخريطة… (إلغاء)':'➕ إضافة نقطة رصد من الخريطة';cv.style.cursor=v?'crosshair':'grab'}
+$('ad').onclick=()=>{setPick(false);setAdd(!addm)};
+$('dc').onclick=async()=>{const a=num('jlat'),b=num('jlon'),t=new Date();try{const r=await fetch(`https://www.ngdc.noaa.gov/geomag-web/calculators/calculateDeclination?lat1=${a}&lon1=${b}&model=WMM&startYear=${t.getFullYear()}&startMonth=${t.getMonth()+1}&startDay=${t.getDate()}&resultFormat=json&key=zNEw7`);const j=await r.json();$('dec').value=j.result[0].declination.toFixed(2);syncL();persist();run()}catch(e){alert('تعذر جلب الانحراف تلقائيًا؛ أدخله يدويًا (من ngdc.noaa.gov أو magnetic-declination.com) — شرقًا موجب، غربًا سالب.')}};
+$('xg').onclick=()=>{const s=ex();if(!s)return;let g='<?xml version="1.0" encoding="UTF-8"?><gpx version="1.1" creator="DroneSearch" xmlns="http://www.topografix.com/GPX/1/1">';
+ const w=(n,q,d)=>{g+=`<wpt lat="${q[0].toFixed(6)}" lon="${q[1].toFixed(6)}"><name>${esc(n)}</name><desc>${esc(d||'')}</desc></wpt>`};
+ s.recs.forEach(r=>{w(r.name+' est',r.est);if(r.obs)w(r.name,r.obs,r.dist.toFixed(0)+' m / '+r.az.toFixed(1)+' true / '+mag(r.az).toFixed(1)+' mag');if(r.home)w(r.name+' launch',r.home)});
+ s.recs.forEach(r=>[1,.8,.5].forEach(sc=>{const c=poly(r.Z,sc);c.push(c[0]);g+=`<trk><name>${esc(r.name)} ${sc*100}%</name><trkseg>${c.map(q=>`<trkpt lat="${q[0].toFixed(6)}" lon="${q[1].toFixed(6)}"/>`).join('')}</trkseg></trk>`}));
+ dl('drone_points.gpx',g+'</gpx>','application/gpx+xml')};
+const ptr=new Map();let pd0=0,z0=0;
+cv.addEventListener('pointerdown',e=>{ptr.set(e.pointerId,[e.clientX,e.clientY]);if(ptr.size==2){const[a,b]=[...ptr.values()];pd0=Math.hypot(a[0]-b[0],a[1]-b[1]);z0=V.z;dr=null}});
+cv.addEventListener('pointermove',e=>{if(!ptr.has(e.pointerId))return;ptr.set(e.pointerId,[e.clientX,e.clientY]);if(ptr.size==2&&pd0){const[a,b]=[...ptr.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);V.z=Math.max(3,Math.min(19,z0+Math.log2(d/pd0)));sx.x=-1e5;draw()}});
+const up=e=>{ptr.delete(e.pointerId);if(ptr.size<2)pd0=0};cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
+function tg(ids,btn,on,off){const hid=$(ids[0]).style.display!='none';ids.forEach(i=>$(i).style.display=hid?'none':'');$(btn).textContent=hid?on:off;big=$('c1').style.display=='none'&&$('c4').style.display=='none';if(!hid&&S)chart();draw();m3h()}
+$('t1').onclick=()=>tg(['c1'],'t1','▼ عرض المعطيات','▲ إخفاء المعطيات');
+$('t3').onclick=()=>tg(['c2'],'t3','▼ عرض النتائج','▲ إخفاء النتائج');
+$('t2').onclick=()=>tg(['c4','c5','c6'],'t2','▼ عرض الرسم والتصدير','▲ إخفاء الرسم والتصدير');
+let tp=null,map3=null,nav3=null,tfail=0,tok=0,mode3=false,tm3=null,mk3=[];
+async function elev(la,lo){tp=[la,lo];$('elv').textContent='… جارٍ جلب الارتفاع';draw();if(map3&&mode3){if(!tm3)tm3=new maplibregl.Marker({color:'#fff'});tm3.setLngLat([lo,la]).addTo(map3)}
+ const jc=[num('jlat'),num('jlon')],hc=!isNaN(jc[0])&&!isNaN(jc[1]);
+ try{const r=await fetch(`https://api.open-meteo.com/v1/elevation?latitude=${la.toFixed(5)}${hc?','+jc[0].toFixed(5):''}&longitude=${lo.toFixed(5)}${hc?','+jc[1].toFixed(5):''}`);const j=await r.json(),h=j.elevation[0];let t=`📍 ${la.toFixed(6)}, ${lo.toFixed(6)} — الارتفاع عن سطح البحر: ${Math.round(h)} م`;if(hc){const d=h-j.elevation[1];t+=` — مقارنة بمركز التشويش (${Math.round(j.elevation[1])} م): ${d>=0?'+':''}${Math.round(d)} م`}
+  const dd=hc?dis(jc,[la,lo]):null;if(dd!=null)t+=` — المسافة ${Math.round(dd)} م، السمت ${brg(jc,[la,lo]).toFixed(0)}° حقيقي / ${mag(brg(jc,[la,lo])).toFixed(0)}° مغ`;$('elv').textContent=t}catch(e){$('elv').textContent=`📍 ${la.toFixed(6)}, ${lo.toFixed(6)} — تعذر جلب الارتفاع (يتطلب إنترنت)`}}
+/* 3D */
+const LABU='https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}',SATU='https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',DEMU='https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png';
+function zones3(){const f=[];if(S)S.recs.forEach(r=>[1,.8,.5].forEach((sc,k)=>{const c=poly(r.Z,sc).map(q=>[q[1],q[0]]);c.push(c[0]);f.push({type:'Feature',properties:{k},geometry:{type:'Polygon',coordinates:[c]}})}));return{type:'FeatureCollection',features:f}}
+function lines3(){const f=[];if(S)S.recs.forEach(r=>{if(r.home&&dis(r.home,r.est)>5)f.push({type:'Feature',properties:{},geometry:{type:'LineString',coordinates:[[r.home[1],r.home[0]],[r.est[1],r.est[0]]]}})});return{type:'FeatureCollection',features:f}}
+function pts3(){const f=[],pt=(q,kind,n)=>f.push({type:'Feature',properties:{kind,n},geometry:{type:'Point',coordinates:[q[1],q[0]]}});if(S){S.recs.forEach((r,i)=>{if(i==0)pt(r.est,'c','📡 مركز التشويش / الانطلاق');else pt(r.est,'p',r.name+' · الدرون المقدّر');if(r.home&&dis(r.home,S.recs[0].est)>5)pt(r.home,'h','▲ نقطة الانطلاق')})}else{const a=num('jlat'),b=num('jlon');if(!isNaN(a)&&!isNaN(b))pt([a,b],'c','📡 مركز التشويش')}return{type:'FeatureCollection',features:f}}
+function sync3(fitIt){if(!map3||!map3.getSource('zones'))return;const L=id=>$(id).checked,g=pts3();map3.getSource('zones').setData(zones3());map3.getSource('lines').setData(lines3());map3.getSource('pts').setData(g);
+ map3.setLayoutProperty('zf','visibility',L('l1')?'visible':'none');map3.setLayoutProperty('zl','visibility',L('l1')?'visible':'none');map3.setLayoutProperty('ln','visibility',L('l4')?'visible':'none');
+ const kinds=[];if(L('l2'))kinds.push('p');if(L('l3'))kinds.push('c');if(L('l4'))kinds.push('h');map3.setFilter('pt',['in',['get','kind'],['literal',kinds]]);
+ mk3.forEach(m=>m.remove());mk3=[];if(L('l5'))g.features.filter(x=>kinds.includes(x.properties.kind)).forEach(x=>{const el=document.createElement('div');el.textContent=x.properties.n;el.style.cssText='background:rgba(0,0,0,.7);color:#fff;padding:1px 6px;border-radius:6px;font:bold 12px sans-serif;white-space:nowrap;pointer-events:none';mk3.push(new maplibregl.Marker({element:el,anchor:'left',offset:[12,-12]}).setLngLat(x.geometry.coordinates).addTo(map3))});
+ if(fitIt&&S){let a=[],b=[];zones3().features.forEach(f=>f.geometry.coordinates[0].forEach(q=>{b.push(q[0]);a.push(q[1])}));if(a.length)map3.fitBounds([[Math.min(...b),Math.min(...a)],[Math.max(...b),Math.max(...a)]],{padding:40,pitch:60,duration:800})}}
+function m3h(){$('m3').style.height=(big?Math.max(420,innerHeight-170):400)+'px';if(map3)map3.resize()}
+function open3(){if(typeof maplibregl=='undefined'){alert('تعذّر تحميل مكتبة الخريطة ثلاثية الأبعاد — تتطلب إنترنت (افتح النسخة المحلية).');return false}
+ if(!map3){const c=[isNaN(num('jlon'))?-7.98:num('jlon'),isNaN(num('jlat'))?31.63:num('jlat')];
+  map3=new maplibregl.Map({container:'m3',center:c,zoom:15,pitch:60,maxPitch:85,style:{version:8,sources:{sat:{type:'raster',tiles:[SATU],tileSize:256,maxzoom:19,attribution:'Esri World Imagery'},lab:{type:'raster',tiles:[LABU],tileSize:256,maxzoom:18},dem:{type:'raster-dem',tiles:[DEMU],encoding:'terrarium',tileSize:256,maxzoom:15}},layers:[{id:'sat',type:'raster',source:'sat'},{id:'labl',type:'raster',source:'lab'}],terrain:{source:'dem',exaggeration:+$('ex').value}}});
+  nav3=new maplibregl.NavigationControl({visualizePitch:true});map3.addControl(nav3,'top-left');map3.addControl(new maplibregl.ScaleControl(),'bottom-left');
+  map3.on('load',()=>{const E={type:'FeatureCollection',features:[]};['zones','lines','pts'].forEach(s=>map3.addSource(s,{type:'geojson',data:E}));
+   const zc=['match',['get','k'],0,'#ffd600',1,'#ff8c00','#e61e1e'];
+   map3.addLayer({id:'zf',type:'fill',source:'zones',paint:{'fill-color':zc,'fill-opacity':.3}});map3.addLayer({id:'zl',type:'line',source:'zones',paint:{'line-color':zc,'line-width':2}});
+   map3.addLayer({id:'ln',type:'line',source:'lines',paint:{'line-color':'#ffeb3b','line-width':2,'line-dasharray':[2,2]}});
+   map3.addLayer({id:'pt',type:'circle',source:'pts',paint:{'circle-radius':7,'circle-color':['match',['get','kind'],'c','#ff2bd6','p','#00e5ff','#ffeb3b'],'circle-stroke-color':'#fff','circle-stroke-width':2.5}});
+   map3.moveLayer('labl');sync3(true)});
+  map3.on('click',e=>elev(e.lngLat.lat,e.lngLat.lng))}
+ return true}
+function setMode(m){if(m==3&&!open3())return;mode3=m==3;cv.style.display=mode3?'none':'';$('m3').style.display=mode3?'block':'none';$('c3').style.display=mode3?'flex':'none';m3h();if(mode3){map3.resize();sync3(true)}else draw()}
+$('v2').onclick=()=>setMode(2);$('v3').onclick=()=>setMode(3);
+$('p1').onclick=()=>map3.easeTo({pitch:Math.min(85,map3.getPitch()+10)});$('p2').onclick=()=>map3.easeTo({pitch:Math.max(0,map3.getPitch()-10)});
+$('b1').onclick=()=>map3.easeTo({bearing:map3.getBearing()-15});$('b2').onclick=()=>map3.easeTo({bearing:map3.getBearing()+15});$('b0').onclick=()=>map3.easeTo({bearing:0});
+$('ex').onchange=()=>{if(map3)map3.setTerrain({source:'dem',exaggeration:+$('ex').value})};
+['l1','l2','l3','l4','l5'].forEach(i=>$(i).addEventListener('change',()=>sync3()));
+$('l6').addEventListener('change',()=>{draw();if(nav3)nav3._container.style.display=$('l6').checked?'':'none'});
+let tmr=null;syncL();document.querySelectorAll('input[type=range]').forEach(i=>i.addEventListener('input',()=>{syncL();if(S){clearTimeout(tmr);tmr=setTimeout(run,150)}}));
+$('hl').onchange=()=>{if(map3)map3.setLayoutProperty('labl','visibility',$('hl').checked?'visible':'none')};
+$('base').value='hyb';recenter();draw();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script></body></html>
